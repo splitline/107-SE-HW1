@@ -105,7 +105,7 @@ public class PhoneBookModel {
 	public PhoneBookModel(PhoneBookView view) {
 		phonebookview = view;
 
-		// phoneBook = new SQLiteDB("phonebook.db");
-		phoneBook = new PlainTextDB("phonebook.txt");
+		phoneBook = new SQLiteDB("phonebook.db");
+		// phoneBook = new PlainTextDB("phonebook.txt");
 	}
 }

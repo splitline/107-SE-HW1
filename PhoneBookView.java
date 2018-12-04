@@ -25,6 +25,8 @@ public class PhoneBookView {
 	  PhoneBookController.ADD_COMMAND + "\" to add a phone entry or \"" + 
 	  PhoneBookController.SEARCH_COMMAND + 
 	  "\" to search for a phone number or \"" + 
+	  PhoneBookController.EDIT_COMMAND + "\" to edit data or \"" +
+	  PhoneBookController.DELETE_COMMAND + "\" to delete data or \""+
 	  PhoneBookController.QUIT_COMMAND + "\" to end the application.";
 	public static String SEARCH_RESULT_Q = 
 	  " - This is the located phone number.   Enter \"" + 
@@ -41,6 +43,11 @@ public class PhoneBookView {
 	  PhoneBookController.START_COMMAND + 
 	  "\" to do more with the application or \"" + 
 	  PhoneBookController.QUIT_COMMAND + "\" to end the application.";
+
+	public static String EDIT_NAME_Q = "Please enter the exact person name";
+	public static String EDIT_NUMBER_Q = "Please enter the phone number";
+
+	public static String DELETE_Q = "Please enter the exact person name.";
 
 	public PhoneBookView(){
 		finish_flag = false;
@@ -91,6 +98,17 @@ public class PhoneBookView {
 		else if (newState.equals(PhoneBookModel.EXIT_STATE)) {
 			System.out.println("Bye Bye");
 			finish_flag = true ;
+		}
+
+		else if(newState.equals(PhoneBookModel.EDIT_NAME_STATE)) {
+			System.out.println(EDIT_NAME_Q);
+		}
+		else if(newState.equals(PhoneBookModel.EDIT_NUMBER_STATE)) {
+			System.out.println(EDIT_NUMBER_Q);
+		}
+
+		else if(newState.equals(PhoneBookModel.DELETE_STATE)) {
+			System.out.println(DELETE_Q);
 		}
 	}
 

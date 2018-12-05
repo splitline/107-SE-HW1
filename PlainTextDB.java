@@ -8,11 +8,12 @@ public class PlainTextDB extends DAO {
 	public PlainTextDB(String filename) {
 		this.filename = filename;
 		File file = new File(filename);
-		if (!file.exists())
+		if (!file.exists()) {
 			try {
 				file.createNewFile();
 			} catch (IOException e) {
 			}
+		}
 	}
 
 	void put(String name, String number) {
@@ -28,8 +29,10 @@ public class PlainTextDB extends DAO {
 			String line;
 			while ((line = br.readLine()) != null) {
 				String[] data = line.split(CSV_SEPERATOR);
-				if (data[0].equals(name))
+				if (data[0].equals(name)) {
+					br.close();
 					return data[1];
+				}
 			}
 		} catch (IOException e) {
 		}
@@ -47,6 +50,7 @@ public class PlainTextDB extends DAO {
 				else
 					content.append(line + "\n");
 			}
+			br.close();
 		} catch (IOException e) {
 		}
 
@@ -66,6 +70,7 @@ public class PlainTextDB extends DAO {
 				if (!data[0].equals(name))
 					content.append(line + "\n");
 			}
+			br.close();
 		} catch (IOException e) {
 		}
 

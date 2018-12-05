@@ -30,8 +30,6 @@ public class PhoneBookModel {
 	// Private fields used to track various model data
 	private String state = IDLE_STATE;
 	private String searchResult = null;
-	// private String editResult = null;
-	// private String deleteResult = null;
 
 	private DAO phoneBook;
 

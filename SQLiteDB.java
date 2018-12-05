@@ -5,6 +5,7 @@ import java.util.*;
 public class SQLiteDB extends DAO {
     String dbname;
     String connUrl;
+
     public SQLiteDB(String dbname) {
         this.dbname = dbname;
         this.connUrl = "jdbc:sqlite:" + dbname;

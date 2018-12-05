@@ -34,17 +34,6 @@ public class PlainTextDB extends DAO {
 	}
 
 	@Override
-	public void edit(String name, String number) {
-		try(Stream<String> input = Files.lines(filePath)) {
-			StringBuilder content = new StringBuilder();
-			input.map(s -> s.startsWith(name + CSV_SEPERATOR) ? (name + "," + number) : s)
-				.forEachOrdered(s -> content.append(s + "\n"));
-			
-			Files.write(filePath, content.toString().getBytes());
-		} catch(Exception e) { e.printStackTrace(); }
-	}
-
-	@Override
 	public void delete(String name) {
 		try(Stream<String> input = Files.lines(filePath)) {
 			StringBuilder content = new StringBuilder();
@@ -53,5 +42,11 @@ public class PlainTextDB extends DAO {
 
 			Files.write(filePath, content.toString().getBytes());
 		} catch(Exception e) {}
+	}
+
+	@Override
+	public void edit(String name, String number) {
+		this.delete(name);
+		this.put(name, number);
 	}
 }

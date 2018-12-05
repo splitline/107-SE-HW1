@@ -20,7 +20,8 @@ public class SQLiteDB extends DAO {
         } catch (SQLException e) { }
     }
 
-    void put(String name, String number) {
+    @Override
+	public void put(String name, String number) {
         try (Connection conn = DriverManager.getConnection(connUrl);
             Statement stmt = conn.createStatement()) {
             if (conn != null) {
@@ -30,7 +31,8 @@ public class SQLiteDB extends DAO {
         } catch (SQLException e) { }
     }
 
-    String get(String name) {
+    @Override
+	public String get(String name) {
         try (Connection conn = DriverManager.getConnection(connUrl);
             Statement stmt = conn.createStatement()) {
             if (conn != null) {
@@ -42,7 +44,8 @@ public class SQLiteDB extends DAO {
         return null;
     }
 
-	void edit(String name, String number) {
+	@Override
+	public void edit(String name, String number) {
         try (Connection conn = DriverManager.getConnection(connUrl);
             Statement stmt = conn.createStatement()) {
             if (conn != null) {
@@ -52,7 +55,8 @@ public class SQLiteDB extends DAO {
         } catch (SQLException e) { }
     }
 
-    void delete(String name) {
+    @Override
+	public void delete(String name) {
         try (Connection conn = DriverManager.getConnection(connUrl);
             Statement stmt = conn.createStatement()) {
             if (conn != null) {

@@ -16,7 +16,8 @@ public class PlainTextDB extends DAO {
 		}
 	}
 
-	void put(String name, String number) {
+	@Override
+	public void put(String name, String number) {
 		try (PrintWriter writer = new PrintWriter(new FileWriter(filename, true))) {
 			writer.println(name + "," + number);
 			writer.close();
@@ -24,7 +25,8 @@ public class PlainTextDB extends DAO {
 		}
 	}
 
-	String get(String name) {
+	@Override
+	public String get(String name) {
 		try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
 			String line;
 			while ((line = br.readLine()) != null) {
@@ -39,7 +41,8 @@ public class PlainTextDB extends DAO {
 		return null;
 	}
 
-	void edit(String name, String number) {
+	@Override
+	public void edit(String name, String number) {
 		StringBuilder content = new StringBuilder();
 		try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
 			String line;
@@ -61,7 +64,8 @@ public class PlainTextDB extends DAO {
 		}
 	}
 
-	void delete(String name) {
+	@Override
+	public void delete(String name) {
 		StringBuilder content = new StringBuilder();
 		try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
 			String line;

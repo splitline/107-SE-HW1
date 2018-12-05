@@ -1,41 +1,36 @@
 import java.io.*;
 import java.util.*;
+import java.util.stream.Stream;
+import java.nio.file.*;
+import java.nio.charset.StandardCharsets;
 
 public class PlainTextDB extends DAO {
-	private String filename;
+	private Path filePath;
 	private final static String CSV_SEPERATOR = ",";
 
 	public PlainTextDB(String filename) {
-		this.filename = filename;
-		File file = new File(filename);
-		if (!file.exists()) {
-			try {
-				file.createNewFile();
-			} catch (IOException e) {
-			}
+		this.filePath = Paths.get(filename);
+		try {
+			Files.createFile(filePath);
+		} catch (Exception e) {
 		}
 	}
 
 	@Override
 	public void put(String name, String number) {
-		try (PrintWriter writer = new PrintWriter(new FileWriter(filename, true))) {
-			writer.println(name + "," + number);
-			writer.close();
+		try {
+			Files.write(filePath, (name + "," + number + "\n").getBytes(), StandardOpenOption.APPEND);
 		} catch (IOException e) {
 		}
 	}
 
 	@Override
 	public String get(String name) {
-		try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
-			String line;
-			while ((line = br.readLine()) != null) {
-				String[] data = line.split(CSV_SEPERATOR);
-				if (data[0].equals(name)) {
-					br.close();
-					return data[1];
-				}
-			}
+		try {
+			return Files.lines(filePath)
+						.filter(data -> data.startsWith(name + CSV_SEPERATOR))
+						.findFirst().get()
+						.split(CSV_SEPERATOR)[1];
 		} catch (IOException e) {
 		}
 		return null;
@@ -43,45 +38,25 @@ public class PlainTextDB extends DAO {
 
 	@Override
 	public void edit(String name, String number) {
-		StringBuilder content = new StringBuilder();
-		try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
-			String line;
-			while ((line = br.readLine()) != null) {
-				String[] data = line.split(CSV_SEPERATOR);
-				if (data[0].equals(name))
-					content.append(data[0] + "," + number + "\n");
-				else
-					content.append(line + "\n");
-			}
-			br.close();
-		} catch (IOException e) {
-		}
-
-		try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
-			bw.write(content.toString());
-			bw.close();
-		} catch (IOException e) {
-		}
+		try(Stream<String> input = Files.lines(filePath)) {
+			StringBuilder content = new StringBuilder();
+			input
+				.map(s -> s.startsWith(name + CSV_SEPERATOR) ? (name + "," + number) : s)
+				.forEachOrdered(s -> content.append(s + "\n"));
+			
+			Files.write(filePath, content.toString().getBytes());
+		} catch(Exception e) { e.printStackTrace(); }
 	}
 
 	@Override
 	public void delete(String name) {
-		StringBuilder content = new StringBuilder();
-		try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
-			String line;
-			while ((line = br.readLine()) != null) {
-				String[] data = line.split(CSV_SEPERATOR);
-				if (!data[0].equals(name))
-					content.append(line + "\n");
-			}
-			br.close();
-		} catch (IOException e) {
-		}
+		try(Stream<String> input = Files.lines(filePath)) {
+			StringBuilder content = new StringBuilder();
+			input
+				.filter(s -> !s.startsWith(name + CSV_SEPERATOR))
+				.forEachOrdered(s -> content.append(s + "\n"));
 
-		try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
-			bw.write(content.toString());
-			bw.close();
-		} catch (IOException e) {
-		}
+			Files.write(filePath, content.toString().getBytes());
+		} catch(Exception e) {}
 	}
 }

@@ -21,11 +21,9 @@ public class PhoneBookModel {
 	// [ADD] Edit
 	public static String EDIT_NAME_STATE = "EDIT_NAME";
 	public static String EDIT_NUMBER_STATE = "EDIT_NUMBER";
-	public static String EDIT_RESULT_STATE = "EDIT_RESULT";
 
 	// [ADD] Delete
 	public static String DELETE_STATE = "DELETE_NAME";
-	public static String DELETE_RESULT_STATE = "DELETE_RESULT";
 
 	// Private fields used to track various model data
 	private String state = IDLE_STATE;

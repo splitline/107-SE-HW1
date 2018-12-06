@@ -18,3 +18,14 @@ make run
 ```
 make clean
 ```
+
+## 大家ㄉ作業
+
+- https://github.com/s92104/SoftwareEngineering_HW1
+- https://github.com/splitline/107-SE-HW1
+- https://github.com/WeiZero/phonebook
+- https://github.com/jack870601/107-SE-HW1
+- https://github.com/Brothre23/Software-Engineering-HW1
+- https://github.com/kehanlu/SE-HW1
+- https://github.com/Petingo/PhoneBook
+- https://github.com/Williamren97/Phonebook
